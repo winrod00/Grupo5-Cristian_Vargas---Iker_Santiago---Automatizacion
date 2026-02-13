@@ -1,7 +1,7 @@
 # Cristian_Vargas---Iker_Santiago---Automatizacion
-repositorio grupo 6 para evidencias de automatizacion
-# Grupo6_Cristian_Vargas_Iker_Santiago  
-### Grupo 6 de Programación Avanzada
+repositorio grupo 5 para evidencias de automatizacion
+# Grupo5_Cristian_Vargas_Iker_Santiago  
+### Grupo 5 de Programación Avanzada
 
 ## 📌 Descripción
 Este repositorio contiene el proyecto de **Software de Automatización** desarrollado en el marco del curso de **Programación Avanzada**.  
