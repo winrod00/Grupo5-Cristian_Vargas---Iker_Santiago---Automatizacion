@@ -33,7 +33,7 @@ El objetivo principal es aplicar conceptos avanzados de programación para dise�
 
 ## 📈 Estado del Proyecto
 En desarrollo 🚧  
-DEJE DE SER MK Y NO DEJE LA CUENTA ABIERTA EN LOS COMPUTADORES DE LA UNIVERSIDAD, PARA LA PROXIMA LE BORRO EL TRABAJO👌
+
 
 ## 📜 Licencia
 Este proyecto se distribuye bajo la licencia **MIT**.  
