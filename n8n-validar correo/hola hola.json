@@ -1,0 +1,115 @@
+{
+  "name": "hola hola",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "/notify",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "fde43517-9ae9-4e30-af9b-9f12d8f57782",
+      "name": "Webhook",
+      "webhookId": "5a548f4f-0b6d-4976-8342-0fd107a8a9da"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "9f371c9f-02f6-482c-b14c-55fa20114ae4",
+              "leftValue": "={{ $json.body.email }}",
+              "rightValue": "^[a-zA-Z0-9_%.+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
+              "operator": {
+                "type": "string",
+                "operation": "regex"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        224,
+        16
+      ],
+      "id": "4f636b2d-ef26-4b44-8b4b-0666e4874e1b",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "sendTo": "criscavana2@gmail.com",
+        "subject": "Nuevos datos recibidos en n8n",
+        "message": "=<!DOCTYPE html> <html lang=\"es\"> <head>     <meta charset=\"UTF-8\"> </head> <body style=\"font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #ffffff; margin: 0; padding: 20px;\">     <div style=\"max-width: 600px; margin: 0 auto; padding: 30px; border-left: 4px solid #2196F3;\">         <h2 style=\"color: #333333; margin-top: 0;\">Mensaje recibido</h2>         <div style=\"background-color: #f5f5f5; padding: 20px; border-radius: 5px; margin: 20px 0;\">             <p style=\"color: #555555; font-size: 15px; line-height: 1.8; margin: 0; white-space: pre-wrap;\">{{ $('Webhook').item.json.body.mensaje }}</p>         </div>         <p style=\"color: #999999; font-size: 12px; margin-top: 30px;\">             <strong>Fecha:</strong> {{ $now.toFormat('dd/MM/yyyy HH:mm') }}         </p>     </div> </body> </html>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        480,
+        -128
+      ],
+      "id": "05fd3eae-6040-48fe-be51-220304a64529",
+      "name": "Send a message",
+      "webhookId": "dc91817d-743e-4e25-b505-d15d9a18144f",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "D5hqu3rciSWmOs6h",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "7447cb6a-b45c-4590-b12e-c8dcf861c927",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "bcd033e9cb1c693eb22c2d2ac8bf1d2cfdcd11f65124f0b40d4dddea941f823e"
+  },
+  "id": "cXgVU9qR2xUeyKBA",
+  "tags": []
+}
