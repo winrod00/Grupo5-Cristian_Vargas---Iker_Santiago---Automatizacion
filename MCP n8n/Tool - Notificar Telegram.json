@@ -1,0 +1,103 @@
+{
+  "name": "Tool - Notificar Telegram",
+  "nodes": [
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "7f7769ae-451f-4ec0-a2ef-20dc9a0d7929",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "666d6df2-c904-4f8c-92e3-b8778b8f74a7",
+              "name": "mesage",
+              "value": "={{ \"📄 *Notificación de Facturas n8n*\\n\\n\" + $json.query }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        208,
+        0
+      ],
+      "id": "5c793985-6b63-46ee-9717-6c5696edd18f",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "chatId": "5087232650",
+        "text": "={{ $json.mesage }}",
+        "additionalFields": {
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        416,
+        0
+      ],
+      "id": "e2df5e62-b5ac-429b-b2d6-b888e975452e",
+      "name": "Send a text message",
+      "webhookId": "d9472f4f-a880-43b7-accf-7d88aafcb875",
+      "credentials": {
+        "telegramApi": {
+          "id": "JFtKXGGt0rAT4bhY",
+          "name": "Telegram account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "27f4dca8-d252-4b8e-9061-9a1faa5cfb82",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "45de9c1d74272048b80b13f5c012c9ad1e541451a6cbe5fa57fde1c587e6e561"
+  },
+  "id": "4q2U6AHEkTs5h4NK",
+  "tags": []
+}

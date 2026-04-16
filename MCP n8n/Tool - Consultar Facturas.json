@@ -1,0 +1,137 @@
+{
+  "name": "Tool - Consultar Facturas",
+  "nodes": [
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "id": "c055762a-8fe7-4141-a639-df2372f30060",
+      "typeVersion": 1.1,
+      "name": "When Executed by Another Workflow",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "position": [
+        272,
+        336
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "6293e1d4-fa5b-471f-b349-20605ca6208c",
+              "leftValue": "={{ $json.id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {
+          "ignoreCase": false
+        }
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        704,
+        336
+      ],
+      "id": "1617e11b-bf31-46e7-8660-09fe81bf3f34",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Formatear las facturas de Notion para Claude (Versión Ajustada)\nconst items = $input.all();\nconst facturas = items.map(item => {\n  const data = item.json;\n  return {\n    proveedor: data.property_proveedor || \"N/A\",\n    numero: data.property_numero_de_factura || \"N/A\",\n    fecha: data.property_fecha_de_factura || \"N/A\",\n    subtotal: data.property_subtotal || 0,\n    impuestos: data.property_impuesto || 0,\n    total: data.property_total || 0,\n    moneda: data.property_moneda || \"COP\",\n    estado: data.property_estado || \"N/A\"\n  };\n});\n\nconst resumen = {\n  total_facturas: facturas.length,\n  suma_total: facturas.reduce((acc, f) => acc + f.total, 0),\n  facturas: facturas\n};\n\nreturn [{\n  json: {\n    response: JSON.stringify(resumen, null, 2)\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        944,
+        320
+      ],
+      "id": "b6462870-4bd9-4382-ac6f-d5f36c60a4d1",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "resource": "database",
+        "operation": "getAll",
+        "returnAll": true
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        496,
+        336
+      ],
+      "id": "6d609b34-9612-46d0-9486-3412945ba8a5",
+      "name": "Get many databases",
+      "credentials": {
+        "notionApi": {
+          "id": "tDfJDlACjxepEFnA",
+          "name": "Notion account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Get many databases",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many databases": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "b5e33a51-1820-4ab2-bf8a-14a524e3774a",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "45de9c1d74272048b80b13f5c012c9ad1e541451a6cbe5fa57fde1c587e6e561"
+  },
+  "id": "sub7xukKwBMC7nbE",
+  "tags": []
+}
